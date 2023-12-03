@@ -1,0 +1,38 @@
+# not needed within configserver
+#server:
+#  port: 8080
+#spring:
+#  datasource:
+#    url: jdbc:h2:mem:testdb
+#    driver-class-name: org.h2.Driver
+#    username: sa
+#    password: ''
+#  h2:
+#    console:
+#      enabled: true
+#  jpa:
+#    database-platform: org.hibernate.dialect.H2Dialect
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+#  config:
+#    import:
+#      - "accounts-qa.yml"
+#      - "accounts-prod.yml"
+##  notes: 1. command line option: we can use command line to enable profile. --spring.profiles.active=?
+#  # 2. jvm option: for jvm option we need to use -Dspring.profiles.active=? -Dbuild.version=?
+#  # 3. env var option: SPRING_PROFILES_ACTIVE=prod;BUILD_VERSION=1.4 (uppercase and replace .with _)
+#  # priority: command line > vm option > env var > property file
+#  profiles:
+#    active: "qa test"
+
+build:
+  version: "3.0"
+accounts:
+  message: "Welcome to EazyBank accounts related local APIs "
+  contactDetails:
+    name: "John Doe - Developer"
+    email: "john@eazybank.com"
+  onCallSupport:
+    - (555) 555-1234
+    - (555) 523-1345

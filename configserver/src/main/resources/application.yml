@@ -1,0 +1,64 @@
+spring:
+  application:
+    name: "configserver"
+  profiles:
+    # notes: in spring cloud this means read config from local
+#    active: native
+    # notes: use git as the config server
+    active: git
+  cloud:
+    config:
+      server:
+#        native:
+          # notes: can test with http://localhost:8071/accouts/prod
+#          search-locations: "classcloud:
+        #    config:
+        #      server:
+        ##        native:
+        #          # notes: can test with http://localhost:8071/accouts/prod
+        ##          search-locations: "classpath:/config"
+        #          # notes: you can also points to a filesystem
+        ##          search-locations: "file:///users//config"
+        #        # notes: use git as the config server
+        #        git:
+        #          uri: "https://github.com/kratos2333/eazybytes-config.git"
+        #          default-label: main
+        #          timeout: 5
+        #          clone-on-start: true
+        #          force-pull: truepath:/config"
+          # notes: you can also points to a filesystem
+#          search-locations: "file:///users//config"
+        # notes: use git as the config server
+        git:
+          uri: "https://github.com/kratos2333/eazybytes-config.git"
+          default-label: main
+          timeout: 5
+          clone-on-start: true
+          force-pull: true
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "guest"
+    password: "guest"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  # note: actuator will give the readiness and liveness statue of the endpoints
+  # we can use: http://localhost:8071/actuator/health to check the health of this configserver service
+  # some other url: http://localhost:8071/actuator/health/liveness, http://localhost:8071/actuator/health/readiness
+  # need to start up the rabbit mq as we use it for the spring cloud bus stuff
+  health:
+    readinessstate:
+      enabled: true
+    livenessstate:
+      enabled: true
+  # note: enable the probes(??) used to check the services readiness and liveness
+  endpoint:
+    health:
+      probes:
+        enabled: true
+server:
+  port: 8071

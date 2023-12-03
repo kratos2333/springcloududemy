@@ -1,0 +1,27 @@
+# put the common part in this file
+services:
+  network-deploy-service:
+    networks:
+      - kevNetwork
+
+  microservice-base-config:
+    # note: this service extends from network-deploy-service
+    extends:
+      service: network-deploy-service
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    environment:
+      SPRING_RABBITMQ_HOST: "rabbit"
+
+  microservice-configserver-config:
+    extends:
+      service: microservice-base-config
+    depends_on:
+      configserver:
+        condition: service_healthy
+    environment:
+      # note: need to replace localhost with configserver here
+      SPRING_CONFIG_IMPORT: "configserver:http://configserver:8071/"
+      SPRING_PROFILES_ACTIVE: qa

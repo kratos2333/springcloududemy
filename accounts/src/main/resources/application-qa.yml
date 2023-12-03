@@ -1,0 +1,19 @@
+## note: this is the alias you can use so in your main property we can do:
+## spring:
+##  profiles:
+##    active: "qa test"
+#spring:
+#  config:
+#    activate:
+#      on-profile: "qa test"
+#
+#build:
+#  version: "2.0"
+#accounts:
+#  message: "Welcome to EazyBank accounts related QA APIs "
+#  contactDetails:
+#    name: "Smitha Ray - QA Lead"
+#    email: "smitha@eazybank.com"
+#  onCallSupport:
+#    - (666) 265-3765
+#    - (666) 734-8371
