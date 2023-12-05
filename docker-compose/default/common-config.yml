@@ -4,6 +4,20 @@ services:
     networks:
       - kevNetwork
 
+  # todo: extract this for the db conotainers
+  microservice-db-config:
+    extends:
+      service: network-deploy-service
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 10s
+
   microservice-base-config:
     # note: this service extends from network-deploy-service
     extends:
@@ -25,3 +39,5 @@ services:
       #    note: need to replace localhost with configserver here
       SPRING_CONFIG_IMPORT: "configserver:http://configserver:8071/"
       SPRING_PROFILES_ACTIVE: default
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
