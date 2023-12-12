@@ -8,13 +8,11 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-// add customized name into the swagger schema
 @Schema(
-        name = "Customer",
-        description = "Schema to hold Customer and Account information"
+        name = "CustomerDetails",
+        description = "Schema to hold Customer, Account, Cards and Loans information"
 )
-public class CustomerDto {
-    // field description and example
+public class CustomerDetailsDto {
     @Schema(
             description = "Name of the customer", example = "Kevin Jia"
     )
@@ -34,8 +32,19 @@ public class CustomerDto {
     )
     @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits")
     private String mobileNumber;
+
     @Schema(
             description = "Account details of the customer"
     )
     private AccountsDto accountsDto;
+
+    @Schema(
+            description = "Loans details of the customer"
+    )
+    private LoansDto loansDto;
+
+    @Schema(
+            description = "Cards details of the customer"
+    )
+    private CardsDto cardsDto;
 }

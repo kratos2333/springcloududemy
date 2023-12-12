@@ -1,0 +1,33 @@
+# todo: notes: use http://localhost:8071/eurekaserver/default to open the eurekaserver
+# project after start up configserver note that some of the eurekaserver config comes from: https://github.com/kratos2333/eazybytes-config/blob/main/eurekaserver.yml
+# todo: notes: http://localhost:8070/eureka/apps allow us to see all the client in xml if you need json then add application/json in header
+# todo: notes: eureka server help to do the client side load balancing
+spring:
+  application:
+    name: "eurekaserver"
+  config:
+    import: "optional:configserver:http://localhost:8071/"
+
+# todo: notes: eurekaserver also starts before the other serive so we need to add following
+# which will used in docker-compose file for the health check
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    readinessstate:
+      enabled: true
+    livenessstate:
+      enabled: true
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+# todo: notes: there is warning in the eureka server page
+#  EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMING INSTANCES ARE UP WHEN THEY'RE NOT.
+#  RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED JUST TO BE SAFE.
+# this is because eureka server could be goes into self-preservation mode this is based on the setting
+# eureka.server.enable-self-preservation=true this is by default, so if eureka.server.renewal-percent-threshold is reached
+# eureka won't remove the client host any more if no heartbeats

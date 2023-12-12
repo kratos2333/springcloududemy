@@ -4,6 +4,20 @@ services:
     networks:
       - kevNetwork
 
+  # todo: extract this for the db conotainers
+  microservice-db-config:
+    extends:
+      service: network-deploy-service
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 10s
+
   microservice-base-config:
     # note: this service extends from network-deploy-service
     extends:
@@ -12,8 +26,6 @@ services:
       resources:
         limits:
           memory: 700m
-    environment:
-      SPRING_RABBITMQ_HOST: "rabbit"
 
   microservice-configserver-config:
     extends:
@@ -22,6 +34,23 @@ services:
       configserver:
         condition: service_healthy
     environment:
-      # note: need to replace localhost with configserver here
+      #    note: need to replace localhost with configserver here
       SPRING_CONFIG_IMPORT: "configserver:http://configserver:8071/"
+      SPRING_PROFILES_ACTIVE: default
+
+  microservice-eurekaserver-config:
+    extends:
+      service: microservice-configserver-config
+    depends_on:
+      eurekaserver:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    environment:
       SPRING_PROFILES_ACTIVE: qa
+      # todo: note: we need to over write the eureka server url as in the project app its points to localhost
+      EUREKA_CLIENT_SERVERURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root

@@ -6,63 +6,54 @@ spring:
     name: "accounts"
   profiles:
     active: "prod"
+#  todo: note: mysql db connection (no need to specify driver)
   datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password: ''
-  h2:
-    console:
-      enabled: true
+    url: jdbc:mysql://localhost:3306/accountsdb
+    username: root
+    password: root
+  #  todo: note: try to run the schema.sql
+  sql:
+    init:
+      mode: always
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: update
     show-sql: true
 #    note: connect with the configserver
   # note: if set to optional then configserver not running won't fail this accounts ms
   config:
     import: "optional:configserver:http://localhost:8071/"
-
-  # note: http://localhost:8080/actuator/refresh will refresh the configuration when the config is in github
-  # note: the config server will refresh automatically from github
-  # note: cons: each microservice you need to do the same thing, how about you have 500 ms
-  # note: enable spring cloud bus, need to install rabbit mq: docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.12-management
-  # note: add following dependency
-  #  <dependency>
-  #   <groupId>org.springframework.cloud</groupId>
-  #   <artifactId>spring-cloud-starter-bus-amqp</artifactId>
-  #  </dependency>
-  # note: add rabbitmq config
-  # note: to refresh the cloud bus we just need to invoke in one ms: http://localhost:8080/actuator/refresh
-  rabbitmq:
-    host: "localhost"
-    port: 5672
-    username: "guest"
-    password: "guest"
-  #  config:
-#    import:
-#      - "application-qa.yml"
-#      - "application-prod.yml"
-#  notes: 1. command line option: we can use command line to enable profile. --spring.profiles.active=?
-  # 2. jvm option: for jvm option we need to use -Dspring.progiles.active=? -Dbuild.version=?
-  # 3. env var option: SPRING_PROFILES_ACTIVE=prod;BUILD_VERSION=1.4 (uppercase and replace .with _)
-  # priority: command line > vm option > env var > property file
-#  profiles:
-#    active: "qa test"
-#
-#build:
-#  version: "3.0"
-#accounts:
-#  message: "Welcome to EazyBank accounts related local APIs "
-#  contactDetails:
-#    name: "John Doe - Developer"
-#    email: "john@eazybank.com"
-#  onCallSupport:
-#    - (555) 555-1234
-#    - (555) 523-1345
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+  # todo: notes: allow accounts server shut down gracefully
+  # send post to : http://localhost:8080/actuator/shutdown
+  endpoint:
+    shutdown:
+      enabled: true
+  # todo: note: for showing info on the eureka server
+  info:
+    env:
+      enabled: true
+
+#endpoints:
+#  shutdown:
+#    enabled: true
+
+# todo: note: by default a client will send heartbeat signal to the server every 30s
+eureka:
+  instance:
+    # todo: note: register with server with ip  address
+    prefer-ip-address: true
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://localhost:8070/eureka/
+# todo: note: show on the eureka server when click the client ms url
+# info will also show when: http://localhost:8080/actuator/info
+info:
+  app:
+    name: "accounts"
+    description: "Easy Bank Accounts Application"
+    version: "1.0.0"

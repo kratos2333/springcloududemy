@@ -27,24 +27,9 @@
 			<artifactId>spring-cloud-config-server</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
-		</dependency>
-<!--	note:	for the webhook call which will invoke the spring cloud bus-->
-<!--		following instruction on: https://console.hookdeck.com/ basically it will open a service in your local-->
-<!--		and github will call this webhook you specify, in our case it expose localhost:8071/monitor-->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-config-monitor</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
 		</dependency>
 	</dependencies>
 	<dependencyManagement>
@@ -71,7 +56,7 @@
 				<version>3.4.0</version>
 				<configuration>
 					<to>
-						<image>kevinjia1984/${project.artifactId}:s6</image>
+						<image>kevinjia1984/${project.artifactId}:s8</image>
 					</to>
 				</configuration>
 			</plugin>
