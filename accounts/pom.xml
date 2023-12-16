@@ -108,7 +108,7 @@
                 <version>3.4.0</version>
                 <configuration>
                     <to>
-                        <image>kevinjia1984/${project.artifactId}:s8</image>
+                        <image>kevinjia1984/${project.artifactId}:s9</image>
                     </to>
                 </configuration>
             </plugin>

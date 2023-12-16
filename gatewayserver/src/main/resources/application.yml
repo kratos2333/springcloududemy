@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: "gatewayserver"
+  config:
+    import: "optional:configserver:http://localhost:8071/"
+  # todo: notes: this is tell gateway server to connect with eureka server to fetch the service info
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          # todo: notes: set this false will close the default route instead only the custom routes will be used, see application.java
+          enabled: false
+          # todo: notes: make the app name to be lowercase
+          lower-case-service-id: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true
+  info:
+    env:
+      enabled: true
+
+info:
+  app:
+    name: "gatewayserver"
+    description: "Easy Bank Gateway Server Application"
+    version: "1.0.0"
