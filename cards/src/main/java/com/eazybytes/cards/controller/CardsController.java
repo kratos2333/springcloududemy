@@ -14,6 +14,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -35,6 +37,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Validated
 public class CardsController {
+
+    private static final Logger logger = LoggerFactory.getLogger(CardsController.class);
+
 
     private ICardsService iCardsService;
 
@@ -98,9 +103,10 @@ public class CardsController {
             )
     })
     @GetMapping("/fetch")
-    public ResponseEntity<CardsDto> fetchCardDetails(@RequestParam
+    public ResponseEntity<CardsDto> fetchCardDetails(@RequestHeader("kevin-correlation-id") String correlationId,@RequestParam
                                                                @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
                                                                String mobileNumber) {
+        logger.debug("kevin-correlation-id found: {}", correlationId);
         CardsDto cardsDto = iCardsService.fetchCard(mobileNumber);
         return ResponseEntity.status(HttpStatus.OK).body(cardsDto);
     }

@@ -29,3 +29,9 @@ info:
     name: "gatewayserver"
     description: "Easy Bank Gateway Server Application"
     version: "1.0.0"
+# todo: notes: enable the bugging at debug level
+logging:
+  level:
+    com:
+      kevinlearn:
+        gatewayserver: DEBUG

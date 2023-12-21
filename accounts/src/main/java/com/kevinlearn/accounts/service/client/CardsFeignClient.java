@@ -4,6 +4,7 @@ import com.kevinlearn.accounts.dto.CardsDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 // todo: notes: this is what registered on eureka server
@@ -14,6 +15,6 @@ public interface CardsFeignClient {
     // todo: notes: CardsDto copied from cards microservice
     // todo: notes: this is very similar to the JPA code, we just need to define the interface
     @GetMapping(value = "/api/fetch", consumes = "application/json")
-    public ResponseEntity<CardsDto> fetchCardDetails(@RequestParam String mobileNumber);
+    public ResponseEntity<CardsDto> fetchCardDetails(@RequestHeader("kevin-correlation-id") String correlationId, @RequestParam String mobileNumber);
 
 }

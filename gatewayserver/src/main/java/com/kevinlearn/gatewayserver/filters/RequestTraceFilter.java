@@ -15,6 +15,7 @@ import reactor.core.publisher.Mono;
 @Order(1)
 @Component
 // TODO: notes: GlobalFilter will filter all the request
+// TODO: notes: used to generate a request id when user request
 public class RequestTraceFilter implements GlobalFilter {
 
     private static final Logger logger = LoggerFactory.getLogger(RequestTraceFilter.class);
@@ -24,15 +25,16 @@ public class RequestTraceFilter implements GlobalFilter {
 
     @Override
     // TODO: notes: in reactive programming Mono means single object
+    // Gateway server project is built based on the reactive module not the servelt module
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         HttpHeaders requestHeaders = exchange.getRequest().getHeaders();
         if (isCorrelationIdPresent(requestHeaders)) {
-            logger.debug("eazyBank-correlation-id found in RequestTraceFilter : {}",
+            logger.debug("kevin-correlation-id found in RequestTraceFilter : {}",
                     filterUtility.getCorrelationId(requestHeaders));
         } else {
             String correlationID = generateCorrelationId();
             exchange = filterUtility.setCorrelationId(exchange, correlationID);
-            logger.debug("eazyBank-correlation-id generated in RequestTraceFilter : {}", correlationID);
+            logger.debug("kevin-correlation-id generated in RequestTraceFilter : {}", correlationID);
         }
         // TODO: note: invoke the next filter in the chain
         return chain.filter(exchange);

@@ -57,3 +57,9 @@ info:
     name: "accounts"
     description: "Easy Bank Accounts Application"
     version: "1.0.0"
+# todo: notes: enable the bugging at debug level
+logging:
+  level:
+    com:
+      kevinlearn:
+        accounts: DEBUG
