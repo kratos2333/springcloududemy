@@ -4,7 +4,7 @@ services:
     networks:
       - kevNetwork
 
-  # todo: extract this for the db conotainers
+  # extract this for the db conotainers
   microservice-db-config:
     extends:
       service: network-deploy-service
@@ -50,7 +50,7 @@ services:
           memory: 700m
     environment:
       SPRING_PROFILES_ACTIVE: prod
-      # todo: note: we need to over write the eureka server url as in the project app its points to localhost
+      # note: we need to over write the eureka server url as in the project app its points to localhost
       EUREKA_CLIENT_SERVERURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root

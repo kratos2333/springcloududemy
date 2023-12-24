@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-// TODO: notes: order(1) will make sure this filer will be executed first in the gateway server
+// notes: order(1) will make sure this filer will be executed first in the gateway server
 @Order(1)
 @Component
-// TODO: notes: GlobalFilter will filter all the request
-// TODO: notes: used to generate a request id when user request
+// notes: GlobalFilter will filter all the request
+// notes: used to generate a request id when user request
 public class RequestTraceFilter implements GlobalFilter {
 
     private static final Logger logger = LoggerFactory.getLogger(RequestTraceFilter.class);
@@ -24,7 +24,7 @@ public class RequestTraceFilter implements GlobalFilter {
     FilterUtility filterUtility;
 
     @Override
-    // TODO: notes: in reactive programming Mono means single object
+    // notes: in reactive programming Mono means single object
     // Gateway server project is built based on the reactive module not the servelt module
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         HttpHeaders requestHeaders = exchange.getRequest().getHeaders();
@@ -36,7 +36,7 @@ public class RequestTraceFilter implements GlobalFilter {
             exchange = filterUtility.setCorrelationId(exchange, correlationID);
             logger.debug("kevin-correlation-id generated in RequestTraceFilter : {}", correlationID);
         }
-        // TODO: note: invoke the next filter in the chain
+        // note: invoke the next filter in the chain
         return chain.filter(exchange);
     }
 

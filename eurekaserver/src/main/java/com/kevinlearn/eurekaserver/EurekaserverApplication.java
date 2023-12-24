@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
 @SpringBootApplication
-// todo: notes: convert a normal project to eurekaserver
+// notes: convert a normal project to eurekaserver
 @EnableEurekaServer
 public class EurekaserverApplication {
 

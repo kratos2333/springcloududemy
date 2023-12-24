@@ -27,6 +27,14 @@ management:
   endpoint:
     shutdown:
       enabled: true
+    health:
+      probes:
+        enabled: true
+  health:
+    readinessstate:
+      enabled: true
+    livenessstate:
+      enabled: true
   info:
     env:
       enabled: true
@@ -43,7 +51,7 @@ info:
     name: "cards"
     description: "Easy Bank Cards Application"
     version: "1.0.0"
-# todo: notes: enable the bugging at debug level
+# notes: enable the bugging at debug level
 logging:
   level:
     com:

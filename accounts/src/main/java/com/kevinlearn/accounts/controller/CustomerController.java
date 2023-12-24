@@ -2,7 +2,6 @@ package com.kevinlearn.accounts.controller;
 
 import com.kevinlearn.accounts.dto.CustomerDetailsDto;
 import com.kevinlearn.accounts.service.ICustomersService;
-import feign.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -42,7 +41,7 @@ public class CustomerController {
     )
     @GetMapping("/fetchCustomerDetails")
     public ResponseEntity<CustomerDetailsDto> fetchCustomerDetails(
-            // todo: notes: fetching correlationId from header and pass along to the services
+            // notes: fetching correlationId from header and pass along to the services (setup in apigateway)
             @RequestHeader("kevin-correlation-id") String correlationId,
             @RequestParam
             @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits")

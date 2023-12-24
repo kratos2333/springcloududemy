@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-// todo: note: when there is a single constructor the autowire will annotated automatically
+// note: when there is a single constructor the autowire will annotated automatically
 public class CustomersServiceImpl implements ICustomersService {
 
     private AccountsRepository accountsRepo;
@@ -43,7 +43,7 @@ public class CustomersServiceImpl implements ICustomersService {
         CustomerDetailsDto customerDetailsDto = CustomerMapper.mapToCustomerDetailsDto(customer, new CustomerDetailsDto());
         customerDetailsDto.setAccountsDto(AccountsMapper.mapToAccountsDto(accounts, new AccountsDto()));
 
-        // todo: notes: call loan feign client, the body will be the object defined in the generic
+        // notes: call loan feign client, the body will be the object defined in the generic
         ResponseEntity<LoansDto> loansDtoResponseEntity = loansFeignClient.fetchLoanDetails(correlationId,mobileNumber);
         customerDetailsDto.setLoansDto(loansDtoResponseEntity.getBody());
 

@@ -10,21 +10,21 @@ import java.time.LocalDateTime;
 
 @SpringBootApplication
 public class GatewayserverApplication {
-	// todo: notes: http://localhost:8072/actuator/gateway/routes to see the routes
-	// todo: notes: http://localhost:8072/ACCOUNTS/api/create this will redirect to ACCOUNTS ms (ACCOUTNS has to be upper case !!! defined in the eureka server)
-	// todo: notes: see the configurations in the application.yml(lower-case-service-id: true) for lowercase the appname
+	// notes: http://localhost:8072/actuator/gateway/routes to see the routes
+	// notes: http://localhost:8072/ACCOUNTS/api/create this will redirect to ACCOUNTS ms
+	// notes: see the configurations in the application.yml(lower-case-service-id: true) for lowercase the appname
 	public static void main(String[] args) {
 		SpringApplication.run(GatewayserverApplication.class, args);
 	}
 
-	// todo: notes: custom routing path, note that the default one will still work
-	// todo: notes: we can achieve the same thing in properties file but use java bean is more flexible
+	// notes: custom routing path, note that the default one will still work
+	// notes: we can achieve the same thing in properties file but use java bean is more flexible
 	@Bean
 	public RouteLocator kevinRouteConfig(RouteLocatorBuilder routeLocatorBuilder) {
 		return routeLocatorBuilder.routes()
 				.route(p -> p.path("/kevin/accounts/**")
 					.filters(f -> f.rewritePath("/kevin/accounts/(?<segment>.*)","/${segment}")
-							// todo: notes: add the response header in the response
+							// notes: add the response header in the response
 							.addResponseHeader("X-Response-Time", LocalDateTime.now().toString()))
 						.uri("lb://ACCOUNTS"))
 				.route(p -> p.path("/kevin/loans/**")

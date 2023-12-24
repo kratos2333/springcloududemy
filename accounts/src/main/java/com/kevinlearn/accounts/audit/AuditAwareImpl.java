@@ -12,7 +12,7 @@ public class AuditAwareImpl implements AuditorAware<String> {
     /**
      * Returns the current auditor of the application
      * @return the current auditorc -- modified by
-     * todo enhance later when learning spring security
+     * enhance later when learning spring security
      */
     @Override
     public Optional<String> getCurrentAuditor() {

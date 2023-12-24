@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import reactor.core.publisher.Mono;
 
-// todo: notes: add correlationId in the response so client will also noticed
-// todo: notes: instead of implments GlobalFilter like requestTraceFilter.java we can also create a bean return GlobalFilter
+// notes: add correlationId in the response so client will also noticed
+// notes: instead of implments GlobalFilter like requestTraceFilter.java we can also create a bean return GlobalFilter
 @Configuration
 public class ResponseTraceFilter {
 

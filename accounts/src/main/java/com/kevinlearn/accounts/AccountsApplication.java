@@ -13,7 +13,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
-// todo: notes: add the feignclients
+// notes: add the feignclients
 @EnableFeignClients
 // note: enable the jpa auditing so in the entity we can audit the annotation like @CreatedDate @LastModifiedDate ...
 // and add the auditor bean here for the modified by, see AuditAwareImpl.java
@@ -42,7 +42,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
                 url = "www.kevinjia.com"
         )
 )
-// todo: note: to run the mysql docker in your local
+// note: to run the mysql docker in your local
 // docker run -p 3306:3306 --name accountsdb -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=accountsdb -d mysql (user will be root also)
 // docker run -p 3307:3306 --name loansdb -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=loansdb -d mysql
 // docker run -p 3308:3306 --name cardsdb -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=cardsdb -d mysql

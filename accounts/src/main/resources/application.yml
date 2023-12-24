@@ -6,12 +6,12 @@ spring:
     name: "accounts"
   profiles:
     active: "prod"
-#  todo: note: mysql db connection (no need to specify driver)
+# note: mysql db connection (no need to specify driver)
   datasource:
     url: jdbc:mysql://localhost:3306/accountsdb
     username: root
     password: root
-  #  todo: note: try to run the schema.sql
+  #  note: try to run the schema.sql
   sql:
     init:
       mode: always
@@ -26,12 +26,20 @@ management:
     web:
       exposure:
         include: "*"
-  # todo: notes: allow accounts server shut down gracefully
+  # notes: allow accounts server shut down gracefully
   # send post to : http://localhost:8080/actuator/shutdown
   endpoint:
     shutdown:
       enabled: true
-  # todo: note: for showing info on the eureka server
+    health:
+      probes:
+        enabled: true
+  health:
+    readinessstate:
+      enabled: true
+    livenessstate:
+      enabled: true
+  # note: for showing info on the eureka server
   info:
     env:
       enabled: true
@@ -40,24 +48,24 @@ management:
 #  shutdown:
 #    enabled: true
 
-# todo: note: by default a client will send heartbeat signal to the server every 30s
+# note: by default a client will send heartbeat signal to the server every 30s
 eureka:
   instance:
-    # todo: note: register with server with ip  address
+    # note: register with server with ip  address
     prefer-ip-address: true
   client:
     fetchRegistry: true
     registerWithEureka: true
     serviceUrl:
       defaultZone: http://localhost:8070/eureka/
-# todo: note: show on the eureka server when click the client ms url
+# note: show on the eureka server when click the client ms url
 # info will also show when: http://localhost:8080/actuator/info
 info:
   app:
     name: "accounts"
     description: "Easy Bank Accounts Application"
     version: "1.0.0"
-# todo: notes: enable the bugging at debug level
+# notes: enable the bugging at debug level (the default debugging level in springboot is info)
 logging:
   level:
     com:
