@@ -21,6 +21,12 @@ spring:
   # note: if set to optional then configserver not running won't fail this accounts ms
   config:
     import: "optional:configserver:http://localhost:8071/"
+  # notes: enable the circuitbreaker
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+
 management:
   endpoints:
     web:
@@ -71,3 +77,15 @@ logging:
     com:
       kevinlearn:
         accounts: DEBUG
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        # notes: monitor 10 requests
+        sliding-window-size: 10
+        permitted-number-of-calls-in-half-open-state: 2
+        # notes: rate to move from close to open
+        failure-rate-threshold: 50
+        # notes: wait 10s before move to half open
+        wait-duration-in-open-state: 10000

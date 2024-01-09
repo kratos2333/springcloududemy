@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 // notes: this is what registered on eureka server
-@FeignClient("cards")
+@FeignClient(name = "cards", fallback = CardsFallback.class)
 public interface CardsFeignClient {
     // notes: method name can be different but the signature and return type should match the target controller
     // notes: for the mapping path specify the fullpath
